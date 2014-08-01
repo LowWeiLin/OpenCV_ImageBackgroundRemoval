@@ -16,8 +16,8 @@ int main()
 	//Load source image
 	//Mat src = imread("human-t-pose.jpg");
 	//Mat src = imread("person1.jpg");
-	Mat src = imread("person2.jpg");
-	//Mat src = imread("shoe.jpg");
+	//Mat src = imread("person2.jpg");
+	Mat src = imread("shoe.jpg");
 
 	//windows
 	/*
