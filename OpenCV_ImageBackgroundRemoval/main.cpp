@@ -13,7 +13,7 @@ Mat canny(Mat src);
 
 int main()
 {
-	//Load source image
+	//Load source image	
 	//Mat src = imread("human-t-pose.jpg");
 	//Mat src = imread("person1.jpg");
 	//Mat src = imread("person2.jpg");
@@ -24,7 +24,7 @@ int main()
 	namedWindow("src", WINDOW_NORMAL);
 	namedWindow("1. \"Remove Shadows\"", WINDOW_NORMAL);
 	namedWindow("2. Grayscale", WINDOW_NORMAL);
-	namedWindow("3. Canny Edge Detector", WINDOW_NORMAL);
+	namedWindow("3. Edge Detector", WINDOW_NORMAL);
 	namedWindow("4. Dilate", WINDOW_NORMAL);
 	namedWindow("5. Floodfill", WINDOW_NORMAL);
 	namedWindow("6. Erode", WINDOW_NORMAL);
@@ -55,11 +55,22 @@ int main()
 	normalize(gray, gray, 0, 255, NORM_MINMAX, CV_8UC1);
 	imshow("2. Grayscale", gray);
 
-	//3. Canny edge detector
+	//3. Edge detector
 	GaussianBlur(gray, gray, Size(3,3), 0, 0, BORDER_DEFAULT);
 	Mat edges;
-	edges = canny(gray);
-	imshow("3. Canny Edge Detector", edges);
+	bool useCanny = false;
+	if(useCanny){
+		edges = canny(gray);
+	} else {
+		//Use Sobel filter and thresholding.
+		edges = sobel(gray);
+		//Automatic thresholding
+		//threshold(edges, edges, 0, 255, cv::THRESH_OTSU);
+		//Manual thresholding
+		threshold(edges, edges, 25, 255, cv::THRESH_BINARY);
+	}
+
+	imshow("3. Edge Detector", edges);
 
 	//4. Dilate
 	Mat dilateGrad = edges;
